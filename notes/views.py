@@ -1,13 +1,25 @@
+import imp
 from django.shortcuts import render
 from django.http import Http404
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import UpdateView, CreateView, DetailView, ListView
+from django.views.generic.edit import DeleteView
 
+from .forms import NotesForm
 from .models import Notes
+
+class NotesDeleteView(DeleteView):
+    model = Notes
+    success_url = '/smart/notes'
+
+class NotesUpdateView(UpdateView):
+    model = Notes
+    success_url = '/smart/notes'
+    form_class = NotesForm
 
 class NotesCreateView(CreateView):
     model = Notes
-    fields = ['title', 'text']
     success_url = '/smart/notes'
+    form_class = NotesForm
 
 #we are quering for all notes and send them to the template
 # this way when the template is rendered all the information coming directly
